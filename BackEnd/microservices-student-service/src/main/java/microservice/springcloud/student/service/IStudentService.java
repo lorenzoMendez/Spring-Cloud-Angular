@@ -10,7 +10,7 @@ public interface IStudentService {
 	
 	public Iterable<Student> findAll();
 	
-	public Student save( Student student );
+	public Student save( Student student ) throws Exception;
 	
 	public void deleteById( Long studentId );
 }

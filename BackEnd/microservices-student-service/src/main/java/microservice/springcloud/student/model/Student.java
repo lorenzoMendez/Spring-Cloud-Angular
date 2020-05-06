@@ -34,6 +34,9 @@ public class Student implements Serializable {
 	@Column( name = "email", length = 35 )
 	private String email;
 	
+	@Column( name = "status_id" )
+	private Integer statusId;
+	
 	@Column( name = "create_date" )
 	@Temporal( TemporalType.TIMESTAMP )
 	private Date createDate;
@@ -93,6 +96,7 @@ public class Student implements Serializable {
 	@PrePersist
 	public void createDate() {
 		this.createDate = new Date();
+		this.statusId = 1;
 	}
 	
 	@PreUpdate
