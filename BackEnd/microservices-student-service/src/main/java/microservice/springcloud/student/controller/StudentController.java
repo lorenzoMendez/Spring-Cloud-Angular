@@ -1,11 +1,13 @@
 package microservice.springcloud.student.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +21,45 @@ public class StudentController {
 	@Autowired
 	private StudentServiceImpl studentService;
 	
-	@GetMapping( "/{studentId}" )
+	@GetMapping( "/findAll" )
+	public ResponseEntity<?> findStudents() {
+		try {
+			
+			return ResponseEntity.ok( studentService.findAll() );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NO_CONTENT).body( "Error al recuperar el listado de alumnos." );
+		}
+	}
+	
+	@GetMapping( "/findById/{studentId}" )
 	public ResponseEntity<?> findStudent( @PathVariable( "studentId" ) Long studentId ) {
-		
-		return ResponseEntity.ok().body( studentService.findById( studentId ) );
+		try {
+			
+			return ResponseEntity.ok().body( studentService.findById( studentId ) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NOT_FOUND).body( err.getMessage() );
+		}
+	}
+	
+	@PostMapping( "/save" )
+	public ResponseEntity<?> saveStudent( @RequestBody Student student ) {
+		try {
+			
+			return ResponseEntity.status( HttpStatus.CREATED ).body( studentService.save(student) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( "No se pudo guardar el estudiante." );
+		}
+	}
+	
+	@DeleteMapping( "/delete/{studentId}" )
+	public ResponseEntity<?> deleteStudent( @PathVariable( "studentId" ) Long studentId ) {
+		try {
+			return ResponseEntity.status( HttpStatus.NO_CONTENT ).body( "" );
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( "Error al eliminar el estudiante." );
+		}
 	}
 }

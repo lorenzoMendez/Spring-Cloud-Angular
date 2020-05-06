@@ -17,15 +17,19 @@ public class StudentServiceImpl implements IStudentService {
 
 	@Override
 	@Transactional( readOnly = true )
-	public Optional<Student> findById(Long studentId) {
+	public Optional<Student> findById(Long studentId) throws Exception {
 		
-		return studentRepository.findById( studentId );
+		Optional<Student> student = studentRepository.findById( studentId );
+		if( !student.isPresent() ) {
+			throw new Exception( "Estudiante con id " + studentId + " no existe." );
+		}
+		return student;
 	}
 
 	@Override
 	@Transactional( readOnly = true )
 	public Iterable<Student> findAll() {
-
+		
 		return studentRepository.findAll();
 	}
 

@@ -2,12 +2,11 @@ package microservice.springcloud.student.service;
 
 import java.util.Optional;
 
-import antlr.collections.List;
 import microservice.springcloud.student.model.Student;
 
 public interface IStudentService {
 	
-	public Optional<Student> findById( Long studentId );
+	public Optional<Student> findById( Long studentId ) throws Exception;
 	
 	public Iterable<Student> findAll();
 	
