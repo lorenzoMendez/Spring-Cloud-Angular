@@ -1,28 +1,12 @@
 package microservice.springcloud.student.service;
 
-import java.util.Optional;
+import java.util.List;
 
-import org.springframework.stereotype.Service;
+import springcloud.microservices.commons.service.CommonService;
+import springcloud.microservices.student.common.model.Student;
 
-import microservice.springcloud.student.model.Student;
-import microservice.springcloud.student.repository.StudentRepository;
-import springcloud.microservices.commons.service.CommonServiceImpl;
-
-@Service
-public class StudentService extends CommonServiceImpl<Student, StudentRepository> implements IStudentService {
+public interface StudentService extends CommonService<Student> {
 	
-	public Student update( Student student ) throws Exception {
-		
-		if( student.getStudentId() == null ) {
-			throw new Exception( "El id del alumno es obligatorio." );
-		}
-		
-		Optional<Student> oldStudent = this.findById( student.getStudentId() );
-		
-		oldStudent.get().setEmail( student.getEmail() );
-		oldStudent.get().setName( student.getName() );
-		oldStudent.get().setLastName( student.getLastName() );
-		
-		return this.save( oldStudent.get() );
-	}
+	public List<Student> findByNameOrLastName( String search );
+	
 }

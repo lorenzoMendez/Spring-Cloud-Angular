@@ -1,4 +1,4 @@
-package microservice.springcloud.student.model;
+package springcloud.microservices.student.common.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -44,6 +44,22 @@ public class Student implements Serializable {
 	@Column( name = "modif_date" )
 	@Temporal( TemporalType.TIMESTAMP )
 	private Date modifDate;
+	
+	@Override
+	public boolean equals( Object obj ) {
+		
+		if( this == obj ) {
+			return true;
+		}
+		
+		if( !( obj instanceof Student ) ) {
+			return false;
+		}
+		
+		Student student = ( Student )obj;
+		
+		return this.studentId != null && this.studentId.equals( student.getStudentId() );
+	}
 	
 	public Long getStudentId() {
 		return studentId;

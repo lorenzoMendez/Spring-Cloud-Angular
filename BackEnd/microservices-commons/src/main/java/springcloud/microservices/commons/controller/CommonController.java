@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import springcloud.microservices.commons.service.ICommonService;
+import springcloud.microservices.commons.service.CommonService;
 
-public class CommonController<E, S extends ICommonService<E>> {
+public class CommonController<E, S extends CommonService<E>> {
 	
 	@Autowired
 	protected S service;
 	
 	@GetMapping( "/retrieve" )
-	public ResponseEntity<?> findStudents() {
+	public ResponseEntity<?> findAll() {
 		try {
 			
 			return ResponseEntity.ok( service.findAll() );
@@ -27,8 +27,8 @@ public class CommonController<E, S extends ICommonService<E>> {
 		}
 	}
 	
-	@GetMapping( "/retrieve/{studentId}" )
-	public ResponseEntity<?> findStudent( @PathVariable( "studentId" ) Long id ) {
+	@GetMapping( "/retrieve/{id}" )
+	public ResponseEntity<?> findById( @PathVariable( "id" ) Long id ) {
 		try {
 			
 			return ResponseEntity.ok().body( service.findById( id ) );
@@ -39,7 +39,7 @@ public class CommonController<E, S extends ICommonService<E>> {
 	}
 	
 	@PostMapping( "/save" )
-	public ResponseEntity<?> saveStudent( @RequestBody E entity ) {
+	public ResponseEntity<?> save( @RequestBody E entity ) {
 		try {
 			
 			return ResponseEntity.status( HttpStatus.CREATED ).body( service.save( entity ) );
@@ -49,8 +49,8 @@ public class CommonController<E, S extends ICommonService<E>> {
 		}
 	}
 	
-	@DeleteMapping( "/delete/{studentId}" )
-	public ResponseEntity<?> deleteStudent( @PathVariable( "studentId" ) Long studentId ) {
+	@DeleteMapping( "/delete/{id}" )
+	public ResponseEntity<?> delete( @PathVariable( "id" ) Long studentId ) {
 		try {
 			
 			service.deleteById( studentId );

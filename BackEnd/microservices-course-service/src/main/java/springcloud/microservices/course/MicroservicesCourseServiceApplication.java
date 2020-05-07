@@ -1,18 +1,17 @@
-package microservice.springcloud.student;
+package springcloud.microservices.course;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-@EntityScan( { "springcloud.microservices.student.common.model" } )
-// Hanilitar como cliente eureka
+@EntityScan( { "springcloud.microservices.student.common.model", "springcloud.microservices.course.model" } )
 @EnableEurekaClient
 @SpringBootApplication
-public class MicroservicesUserServiceApplication {
+public class MicroservicesCourseServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MicroservicesUserServiceApplication.class, args);
+		SpringApplication.run(MicroservicesCourseServiceApplication.class, args);
 	}
 
 }

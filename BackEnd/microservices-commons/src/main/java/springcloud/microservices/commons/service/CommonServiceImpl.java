@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-public class CommonServiceImpl<E, R extends CrudRepository<E, Long>> implements ICommonService<E> {
+public class CommonServiceImpl<E, R extends CrudRepository<E, Long>> implements CommonService<E> {
 	
 	// Protected para poderlo utilizar en clases hijas
 	@Autowired
@@ -15,28 +15,36 @@ public class CommonServiceImpl<E, R extends CrudRepository<E, Long>> implements 
 	@Override
 	@Transactional( readOnly = true )
 	public Optional<E> findById( Long id ) throws Exception {
-		
-		return repository.findById( id );
+		Optional<E> e = repository.findById( id );
+		if( !e.isPresent() ) {
+			throw new Exception( "No hay registro con el id " + id );
+		}
+		return e;
 	}
 
 	@Override
 	@Transactional( readOnly = true )
 	public Iterable<E> findAll() {
-		
 		return repository.findAll();
 	}
 
 	@Override
 	@Transactional
 	public E save(E entity ) throws Exception {
-		
-		return repository.save( entity );
+		try {
+			return repository.save( entity );
+		} catch( Exception err ) {
+			throw new Exception( "Error! No se pudo guardar el registro." );
+		}
 	}
 
 	@Override
 	@Transactional
-	public void deleteById( Long id ) {
-		
-		repository.deleteById( id );
+	public void deleteById( Long id ) throws Exception {
+		try {
+			repository.deleteById( id );
+		} catch( Exception err ) {
+			throw new Exception( "Error! No se pudo borrar el registro." );
+		}
 	}
 }
