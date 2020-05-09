@@ -30,12 +30,10 @@ public class CommonServiceImpl<E, R extends CrudRepository<E, Long>> implements 
 
 	@Override
 	@Transactional
-	public E save(E entity ) throws Exception {
-		try {
-			return repository.save( entity );
-		} catch( Exception err ) {
-			throw new Exception( "Error! No se pudo guardar el registro." );
-		}
+	public E save(E entity ) {
+		
+		return repository.save( entity );
+		
 	}
 
 	@Override

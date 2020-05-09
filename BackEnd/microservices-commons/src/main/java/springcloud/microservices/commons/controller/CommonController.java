@@ -46,13 +46,12 @@ public class CommonController<E, S extends CommonService<E>> {
 	
 	@PostMapping( "/save" )
 	public ResponseEntity<?> save( @Valid @RequestBody E entity, BindingResult result ) {
-		try {
-			
-			return ResponseEntity.status( HttpStatus.CREATED ).body( service.save( entity ) );
-			
-		} catch( Exception err ) {
-			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( err.getMessage() );
+		
+		if( result.hasErrors() ) {
+			return validation( result );
 		}
+		
+		return ResponseEntity.status( HttpStatus.CREATED ).body( service.save( entity ) );
 	}
 	
 	@DeleteMapping( "/delete/{id}" )

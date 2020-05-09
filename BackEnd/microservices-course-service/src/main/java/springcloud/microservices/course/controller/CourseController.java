@@ -2,8 +2,11 @@ package springcloud.microservices.course.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +23,12 @@ import springcloud.microservices.student.common.model.Student;
 public class CourseController extends CommonController<Course, CourseServiceImpl> {
 	
 	@PutMapping( "/update" )
-	public ResponseEntity<?> updateCourse( @RequestBody Course course ) {
+	public ResponseEntity<?> updateCourse( @Valid @RequestBody Course course, BindingResult result ) {
+		
+		if( result.hasErrors() ) {
+			return validation( result );
+		}
+		
 		try {
 			
 			return ResponseEntity.status( HttpStatus.CREATED ).body( this.service.update( course ) );

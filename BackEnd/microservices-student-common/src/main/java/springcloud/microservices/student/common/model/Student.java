@@ -15,6 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "Student" )
@@ -28,15 +29,17 @@ public class Student implements Serializable {
 	private Long studentId;
 	
 	@NotEmpty
+	@Size( min = 3, max = 25 )
 	@Column( name = "name", length = 25 )
 	private String name;
 	
 	@NotEmpty
+	@Size( min = 3, max = 50 )
 	@Column( name = "last_name", length = 50 )
 	private String lastName;
 	
 	@NotEmpty
-	@Email(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" )
+	@Email//(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" )
 	@Column( name = "email", length = 35 )
 	private String email;
 	

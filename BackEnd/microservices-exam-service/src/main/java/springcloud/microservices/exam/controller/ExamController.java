@@ -1,7 +1,10 @@
 package springcloud.microservices.exam.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,7 +19,12 @@ import springcloud.microservices.exam.service.ExamServiceImpl;
 public class ExamController extends CommonController<Exam, ExamServiceImpl> {
 	
 	@PutMapping( "/update" )
-	public ResponseEntity<?> update( @RequestBody Exam exam ) {
+	public ResponseEntity<?> update( @Valid @RequestBody Exam exam, BindingResult result ) {
+		
+		if( result.hasErrors() ) {
+			return validation( result );
+		}
+		
 		try {
 			
 			return ResponseEntity.status( HttpStatus.CREATED ).body( this.service.update( exam ) );
