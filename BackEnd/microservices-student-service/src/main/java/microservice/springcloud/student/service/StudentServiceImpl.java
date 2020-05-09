@@ -3,6 +3,8 @@ package microservice.springcloud.student.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,5 +63,18 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 		}
 		
 		return this.save( oldStudent.get() );
+	}
+	
+	public Resource retrievePhoto( Long studentId ) throws Exception {
+		Optional<Student> student = this.findById( studentId );
+		if( !student.isPresent() ) {
+			throw new Exception( "Alumno con id " + studentId + " no existe." );
+		}
+		
+		if( student.get().getPhoto() == null ) {
+			throw new Exception( "Alumno con id " + studentId + " no tiene una foto."  );
+		}
+		
+		return new ByteArrayResource( student.get().getPhoto() );
 	}
 }

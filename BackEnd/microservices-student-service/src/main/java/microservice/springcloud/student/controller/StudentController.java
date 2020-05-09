@@ -3,6 +3,7 @@ package microservice.springcloud.student.controller;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +68,17 @@ public class StudentController extends CommonController<Student, StudentServiceI
 			return ResponseEntity.status( HttpStatus.CREATED ).body( this.service.updateWithPhoto(student, file ) );
 		} catch( Exception err ) {
 			return ResponseEntity.status( HttpStatus.NOT_MODIFIED ).body( err.getMessage() );
+		}
+	}
+	
+	@GetMapping( "/upload-photo/{studentId}" )
+	public ResponseEntity<?> retrievePhoto( @PathVariable( "studentId" ) Long studentId ) {
+		try {
+			
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).contentType( MediaType.IMAGE_JPEG ).body( this.service.retrievePhoto( studentId ) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( err.getMessage() );
 		}
 	}
 }
