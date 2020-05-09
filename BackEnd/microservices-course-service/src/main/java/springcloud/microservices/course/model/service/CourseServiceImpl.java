@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import springcloud.microservices.commons.service.CommonServiceImpl;
 import springcloud.microservices.course.model.Course;
 import springcloud.microservices.course.repository.CourseRepository;
+import springcloud.microservices.exam.common.model.Exam;
 import springcloud.microservices.student.common.model.Student;
 
 @Service
@@ -37,9 +38,7 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 		}
 		Course dbCourse = course.get();
 		
-		listStudent.forEach( student -> {
-			dbCourse.addStudentList( student );
-		} );
+		listStudent.forEach( dbCourse::addStudentList );
 		
 		return this.save( dbCourse );
 	}
@@ -63,5 +62,33 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 	public Course findCourseByStudentId(Long studentId) {
 		
 		return repository.findCourseByStudentId( studentId );
+	}
+	
+	public Course registerExam( List<Exam> listExam, Long courseId ) throws Exception {
+		
+		Optional<Course> course = this.findById( courseId );
+		
+		if( !course.isPresent() ) {
+			throw new Exception( "El curso con id " + courseId + " no existe" );
+		}
+		Course dbCourse = course.get();
+		
+		listExam.forEach( dbCourse::addExam );
+		
+		return this.save( dbCourse );
+	}
+	
+	public Course deleteExamFromCourse( Exam exam, Long courseId ) throws Exception {
+		
+		Optional<Course> course = this.findById( courseId );
+		
+		if( !course.isPresent() ) {
+			throw new Exception( "El curso con id " + courseId + " no existe" );
+		}
+		Course dbCourse = course.get();
+		
+		dbCourse.removeExam( exam );
+		
+		return this.save( dbCourse );
 	}
 }

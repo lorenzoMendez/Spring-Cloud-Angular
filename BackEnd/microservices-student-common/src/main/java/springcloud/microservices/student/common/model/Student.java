@@ -13,6 +13,8 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table( name = "Student" )
@@ -25,12 +27,16 @@ public class Student implements Serializable {
 	@Column( name = "student_id" )
 	private Long studentId;
 	
+	@NotEmpty
 	@Column( name = "name", length = 25 )
 	private String name;
 	
+	@NotEmpty
 	@Column( name = "last_name", length = 50 )
 	private String lastName;
 	
+	@NotEmpty
+	@Email(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" )
 	@Column( name = "email", length = 35 )
 	private String email;
 	

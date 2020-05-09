@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springcloud.microservices.commons.controller.CommonController;
 import springcloud.microservices.course.model.Course;
 import springcloud.microservices.course.model.service.CourseServiceImpl;
+import springcloud.microservices.exam.common.model.Exam;
 import springcloud.microservices.student.common.model.Student;
 
 @RestController
@@ -59,6 +60,28 @@ public class CourseController extends CommonController<Course, CourseServiceImpl
 			
 		} catch( Exception err ) {
 			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Error! No se pudo recuerar el curso" );
+		}
+	}
+	
+	@PutMapping( "/{courseId}/register-exam" )
+	public ResponseEntity<?> registerExam( @RequestBody List<Exam> listExam, @PathVariable( "courseId" ) Long courseId ) {
+		try {
+			
+			return ResponseEntity.status( HttpStatus.CREATED ).body( this.service.registerExam( listExam, courseId ) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NOT_MODIFIED ).body( "Error! No se pudo actualizar el curso" );
+		}
+	}
+	
+	@PutMapping( "/{courseId}/delete-exam" )
+	public ResponseEntity<?> deleteExamtFromCourse( @RequestBody Exam exam, @PathVariable( "courseId" ) Long courseId ) {
+		try {
+			
+			return ResponseEntity.status( HttpStatus.NO_CONTENT ).body( this.service.deleteExamFromCourse( exam, courseId ) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NOT_MODIFIED ).body( "Error! No se pudo actualizar el curso" );
 		}
 	}
 }

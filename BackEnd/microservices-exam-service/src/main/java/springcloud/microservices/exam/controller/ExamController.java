@@ -2,6 +2,8 @@ package springcloud.microservices.exam.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,28 @@ public class ExamController extends CommonController<Exam, ExamServiceImpl> {
 			
 		} catch( Exception err ) {
 			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( err.getMessage() );
+		}
+	}
+	
+	@GetMapping( "/filter/{name}" )
+	public ResponseEntity<?> filterByName( @PathVariable( "name" ) String name ) {
+		try {
+			
+			return ResponseEntity.status( HttpStatus.OK ).body( this.service.findByName( name ) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NO_CONTENT ).body( "No se encontraron registros." );
+		}
+	}
+	
+	@GetMapping( "/subject" )
+	public ResponseEntity<?> findSubject() {
+		try {
+			
+			return ResponseEntity.status( HttpStatus.OK ).body( this.service.findAllSubject() );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NO_CONTENT ).body( "No se encontraron registros." );
 		}
 	}
 }

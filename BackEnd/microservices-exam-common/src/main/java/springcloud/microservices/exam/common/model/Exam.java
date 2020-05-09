@@ -12,12 +12,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -32,6 +35,7 @@ public class Exam implements Serializable {
 	@Column( name = "exam_id" )
 	private Long examId;
 	
+	@NotEmpty
 	@Column( name = "description" )
 	private String description;
 	
@@ -49,6 +53,10 @@ public class Exam implements Serializable {
 	@JsonIgnoreProperties( value = { "exam" }, allowSetters=true )
 	@OneToMany( mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true )
 	List<Question> questions = new ArrayList<Question>();
+	
+	@NotNull
+	@ManyToOne( fetch = FetchType.LAZY )
+	private Subject subject;
 	
 	public List<Question> getQuestions() {
 		return questions;
@@ -108,6 +116,30 @@ public class Exam implements Serializable {
 
 	public void setModifDate(Date modifDate) {
 		this.modifDate = modifDate;
+	}
+	
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
+	@Override
+	public boolean equals( Object obj ) {
+		
+		if( this == obj ) {
+			return true;
+		}
+		
+		if( !( obj instanceof Exam ) ) {
+			return false;
+		}
+		
+		Exam exam = ( Exam ) obj;
+		
+		return this.examId != null && exam.getExamId() != null && this.examId.equals( exam.getExamId() );
 	}
 	
 	@PrePersist

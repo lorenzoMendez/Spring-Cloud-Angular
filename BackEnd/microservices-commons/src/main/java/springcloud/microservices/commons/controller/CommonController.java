@@ -1,8 +1,14 @@
 package springcloud.microservices.commons.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +45,7 @@ public class CommonController<E, S extends CommonService<E>> {
 	}
 	
 	@PostMapping( "/save" )
-	public ResponseEntity<?> save( @RequestBody E entity ) {
+	public ResponseEntity<?> save( @Valid @RequestBody E entity, BindingResult result ) {
 		try {
 			
 			return ResponseEntity.status( HttpStatus.CREATED ).body( service.save( entity ) );
@@ -60,5 +66,15 @@ public class CommonController<E, S extends CommonService<E>> {
 		} catch( Exception err ) {
 			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( "Error al eliminar el estudiante." );
 		}
+	}
+	
+	protected ResponseEntity<?> validation( BindingResult result ) {
+		
+		Map<String, Object> errors = new HashMap<String, Object>();
+		result.getFieldErrors().forEach( err -> {
+			errors.put( err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage() );
+		} );
+		
+		return ResponseEntity.badRequest().body( errors );
 	}
 }
