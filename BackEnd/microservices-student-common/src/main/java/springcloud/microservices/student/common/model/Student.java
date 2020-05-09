@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -16,6 +17,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table( name = "Student" )
@@ -54,6 +57,20 @@ public class Student implements Serializable {
 	@Temporal( TemporalType.TIMESTAMP )
 	private Date modifDate;
 	
+	// Solo lo utilizaremos para persistir la imagen
+	@JsonIgnore
+	@Lob
+	@Column( name = "photo" )
+	private byte[] photo;
+	
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
 	@Override
 	public boolean equals( Object obj ) {
 		
@@ -68,6 +85,14 @@ public class Student implements Serializable {
 		Student student = ( Student )obj;
 		
 		return this.studentId != null && this.studentId.equals( student.getStudentId() );
+	}
+	
+	public Integer getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Integer statusId) {
+		this.statusId = statusId;
 	}
 	
 	public Long getStudentId() {
@@ -117,7 +142,11 @@ public class Student implements Serializable {
 	public void setModifDate(Date modifDate) {
 		this.modifDate = modifDate;
 	}
-
+	
+	public Integer getPhotoHashCode() {
+		return ( this.photo != null ? this.photo.hashCode() : null );
+	}
+	
 	@PrePersist
 	public void createDate() {
 		this.createDate = new Date();

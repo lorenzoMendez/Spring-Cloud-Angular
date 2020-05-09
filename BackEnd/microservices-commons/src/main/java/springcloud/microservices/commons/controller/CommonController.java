@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,17 @@ public class CommonController<E, S extends CommonService<E>> {
 	
 	@Autowired
 	protected S service;
+	
+	@GetMapping( "/pagination" )
+	public ResponseEntity<?> findAll( Pageable pageable ) {
+		try {
+			
+			return ResponseEntity.ok( service.findAll( pageable ) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NO_CONTENT).body( "Error al recuperar el listado de alumnos." );
+		}
+	}
 	
 	@GetMapping( "/retrieve" )
 	public ResponseEntity<?> findAll() {
