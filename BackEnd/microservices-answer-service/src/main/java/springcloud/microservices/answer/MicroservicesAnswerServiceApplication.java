@@ -8,9 +8,9 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @EnableEurekaClient
 @SpringBootApplication
 @EntityScan( { 
-		"springcloud.microservices.answer.model", 
-		"springcloud.microservices.student.common.model", 
-		"springcloud.microservices.exam.common.model" } )
+	"springcloud.microservices.answer.model",
+	"springcloud.microservices.student.common.model",
+	"springcloud.microservices.exam.common.model" } )
 public class MicroservicesAnswerServiceApplication {
 
 	public static void main(String[] args) {

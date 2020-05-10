@@ -5,5 +5,7 @@ import springcloud.microservices.course.model.Course;
 
 public interface CourseService extends CommonService<Course> {
 	
-	public Course findCourseByStudentId( Long studentId );
+	public Course findCourseByStudentId( Long studentId ) throws Exception;
+	
+	public Iterable<Long> findExamAnswered( Long studentId );
 }

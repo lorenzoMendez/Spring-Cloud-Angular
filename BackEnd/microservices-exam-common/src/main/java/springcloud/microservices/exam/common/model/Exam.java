@@ -19,6 +19,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -57,6 +58,9 @@ public class Exam implements Serializable {
 	@NotNull
 	@ManyToOne( fetch = FetchType.LAZY )
 	private Subject subject;
+	
+	@Transient
+	private boolean answerStatus;
 	
 	public List<Question> getQuestions() {
 		return questions;
@@ -124,6 +128,14 @@ public class Exam implements Serializable {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+	
+	public boolean isAnswerStatus() {
+		return answerStatus;
+	}
+
+	public void setAnswerStatus(boolean answerStatus) {
+		this.answerStatus = answerStatus;
 	}
 
 	@Override

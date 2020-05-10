@@ -67,7 +67,7 @@ public class CourseController extends CommonController<Course, CourseServiceImpl
 			return ResponseEntity.ok( this.service.findCourseByStudentId( studentId ) );
 			
 		} catch( Exception err ) {
-			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Error! No se pudo recuerar el curso" );
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( err.getMessage() );
 		}
 	}
 	
