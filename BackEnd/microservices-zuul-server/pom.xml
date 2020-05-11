@@ -8,10 +8,10 @@
 		<version>2.2.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>springcloud.microservices.gateway.server</groupId>
-	<artifactId>microservices-gateway-server</artifactId>
+	<groupId>springcloud.microservices.zuul.server</groupId>
+	<artifactId>microservices-zuul-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>microservices-gateway-server</name>
+	<name>microservices-zuul-server</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
