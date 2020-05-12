@@ -9,4 +9,8 @@ public interface StudentService extends CommonService<Student> {
 	
 	public List<Student> findByNameOrLastName( String search );
 	
+	public List<Student> findAllByIds( List<Long> list );
+	
+	public void deleteCourseByStudentId( Long studentId );
+	
 }

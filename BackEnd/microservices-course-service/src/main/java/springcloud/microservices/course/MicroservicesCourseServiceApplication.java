@@ -7,7 +7,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients
-@EntityScan( { "springcloud.microservices.student.common.model", 
+@EntityScan( { //"springcloud.microservices.student.common.model", 
 			   "springcloud.microservices.course.model", 
 			   "springcloud.microservices.exam.common.model" } )
 @EnableEurekaClient

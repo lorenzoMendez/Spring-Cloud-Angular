@@ -1,5 +1,7 @@
 package microservice.springcloud.student.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -81,4 +83,16 @@ public class StudentController extends CommonController<Student, StudentServiceI
 			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( err.getMessage() );
 		}
 	}
+	
+	@GetMapping( "/students-ids" )
+	public ResponseEntity<?> retrieveStudentsByIds( @RequestParam List<Long> list ) {
+		try {
+			
+			return ResponseEntity.ok().body( this.service.findAllByIds( list ) );
+			
+		} catch( Exception err ) {
+			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "No se encontraron resultados" );
+		}
+	}
+	
 }

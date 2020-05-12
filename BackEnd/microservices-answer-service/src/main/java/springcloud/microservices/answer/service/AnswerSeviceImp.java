@@ -1,5 +1,8 @@
 package springcloud.microservices.answer.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,11 @@ public class AnswerSeviceImp implements AnswerService {
 	@Override
 	@Transactional
 	public Iterable<Answer> saveAll(Iterable<Answer> answers) {
+		
+		answers = ( (List<Answer>) answers ).stream().map( a -> {
+			a.setAnsweId( a.getStudent().getStudentId() );
+			return a;
+		} ).collect( Collectors.toList() );
 		
 		return answerRepository.saveAll( answers );
 	}

@@ -32,7 +32,7 @@ public class CommonController<E, S extends CommonService<E>> {
 			return ResponseEntity.ok( service.findAll( pageable ) );
 			
 		} catch( Exception err ) {
-			return ResponseEntity.status( HttpStatus.NO_CONTENT).body( "Error al recuperar el listado de alumnos." );
+			return ResponseEntity.status( HttpStatus.NO_CONTENT).body( "Error al recuperar la lista." );
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class CommonController<E, S extends CommonService<E>> {
 			return ResponseEntity.ok( service.findAll() );
 			
 		} catch( Exception err ) {
-			return ResponseEntity.status( HttpStatus.NO_CONTENT).body( "Error al recuperar el listado de alumnos." );
+			return ResponseEntity.status( HttpStatus.NO_CONTENT).body( "Error al recuperar la lista." );
 		}
 	}
 	
@@ -69,15 +69,15 @@ public class CommonController<E, S extends CommonService<E>> {
 	}
 	
 	@DeleteMapping( "/delete/{id}" )
-	public ResponseEntity<?> delete( @PathVariable( "id" ) Long studentId ) {
+	public ResponseEntity<?> delete( @PathVariable( "id" ) Long id ) {
 		try {
 			
-			service.deleteById( studentId );
+			service.deleteById( id );
 			
 			return ResponseEntity.status( HttpStatus.CREATED ).build();
 		
 		} catch( Exception err ) {
-			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( "Error al eliminar el estudiante." );
+			return ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).body( "Error al eliminar el registro con id " + id + "." );
 		}
 	}
 	

@@ -9,10 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import springcloud.microservices.exam.common.model.Question;
 import springcloud.microservices.student.common.model.Student;
@@ -27,10 +27,14 @@ public class Answer implements Serializable {
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column( name = "answer_id" )
 	private Long answeId;
-	
+
 	// Muchas respuestas a un estudiante
-	@ManyToOne( fetch = FetchType.LAZY )
+	// @ManyToOne( fetch = FetchType.LAZY )
+	@Transient
 	private Student student;
+	
+	@Column( name = "student_id" )
+	private Long studentId;
 	
 	// Una respuesta a una pregunta
 	@OneToOne( fetch = FetchType.LAZY )
@@ -41,6 +45,14 @@ public class Answer implements Serializable {
 	
 	@Column( name = "create_date" )
 	private Date createDate;
+	
+	public Long getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
+	}
 	
 	public Long getAnsweId() {
 		return answeId;

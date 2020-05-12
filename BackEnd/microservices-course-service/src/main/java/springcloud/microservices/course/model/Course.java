@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import springcloud.microservices.exam.common.model.Exam;
 import springcloud.microservices.student.common.model.Student;
@@ -45,7 +49,12 @@ public class Course implements Serializable {
 	@Column( name = "active_id", nullable = false )
 	private Integer activeId;
 	
-	@OneToMany( fetch = FetchType.LAZY )
+	@JsonIgnoreProperties( value = { "course" }, allowSetters = true )
+	@OneToMany( fetch = FetchType.LAZY, mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true )
+	private List<CourseStudent> courseStudents = new ArrayList<>();
+	
+	// @OneToMany( fetch = FetchType.LAZY )
+	@Transient
 	private List<Student> students = new ArrayList<Student>();
 	
 	@ManyToMany( fetch = FetchType.LAZY )
@@ -136,6 +145,22 @@ public class Course implements Serializable {
 	
 	public void removeStudentList( Student student ) {
 		this.students.remove( student );
+	}
+
+	public List<CourseStudent> getCourseStudents() {
+		return courseStudents;
+	}
+
+	public void setCourseStudents(List<CourseStudent> courseStudents) {
+		this.courseStudents = courseStudents;
+	}
+	
+	public void addCourseStudent( CourseStudent courseStudent ) {
+		this.courseStudents.add( courseStudent );
+	}
+	
+	public boolean removeCourseStudent( CourseStudent courseStudent ) {
+		return this.courseStudents.remove( courseStudent );
 	}
 	
 }

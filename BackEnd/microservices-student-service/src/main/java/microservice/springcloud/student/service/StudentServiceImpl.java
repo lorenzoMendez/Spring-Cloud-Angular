@@ -1,8 +1,10 @@
 package microservice.springcloud.student.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -10,11 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import springcloud.microservices.student.common.model.Student;
+import microservice.springcloud.student.client.CourseFeignClient;
 import microservice.springcloud.student.repository.StudentRepository;
 import springcloud.microservices.commons.service.CommonServiceImpl;
 
 @Service
 public class StudentServiceImpl extends CommonServiceImpl<Student, StudentRepository> implements StudentService {
+	
+	@Autowired
+	private CourseFeignClient courseClient;
 	
 	public Student update( Student student ) throws Exception {
 		
@@ -76,5 +82,26 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 		}
 		
 		return new ByteArrayResource( student.get().getPhoto() );
+	}
+
+	@Override
+	@Transactional( readOnly = true )
+	public List<Student> findAllByIds( List<Long> list) {
+		if( list.size() > 0 ) {
+			return (List<Student>) this.repository.findAllById( list );
+		}
+		return new ArrayList<>();
+	}
+
+	@Override
+	public void deleteCourseByStudentId(Long studentId) {
+		courseClient.deleteCourseByStudentId( studentId );
+	}
+
+	@Override
+	@Transactional
+	public void deleteById( Long studentId ) throws Exception {
+		super.deleteById( studentId );
+		this.deleteCourseByStudentId( studentId );
 	}
 }
