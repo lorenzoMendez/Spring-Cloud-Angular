@@ -14,11 +14,20 @@ export class StudentComponent implements OnInit {
   public students: Student[] = [];
 
   // Se puede inyectar dependencias de esta forma
-  constructor( private studentServie: StudentService ) { }
+  constructor( private studentService: StudentService ) { }
 
   ngOnInit(): void {
     // Primero suscribirse al observable
-    this.studentServie.listingStudents().subscribe( students => this.students = students );
+    this.studentService.listingStudents().subscribe( students => this.students = students );
+  }
+
+  public delete( student: Student ): void {
+    if( confirm( `Esta seguro que desea eliminar a ${student.name}?` ) ) {
+      this.studentService.deleteStudent( student.studentId ).subscribe( () => {
+        this.students = this.students.filter( s => s !== student );
+        alert( `Alumno ${ student.name } eliminado con exito.` );
+      } );      
+    }
   }
 
 }

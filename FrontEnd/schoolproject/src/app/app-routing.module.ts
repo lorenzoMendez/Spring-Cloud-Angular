@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'alumnos' },
   { path: 'alumnos', component: StudentComponent },
   { path: 'alumnos/form', component: StudentFormComponent },
+  { path: 'alumnos/editar', component: StudentFormComponent },
   { path: 'examenes', component: ExamComponent },
   { path: 'cursos', component: CourseComponent }
 ];

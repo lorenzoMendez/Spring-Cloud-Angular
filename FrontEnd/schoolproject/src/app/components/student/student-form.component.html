@@ -6,18 +6,21 @@
         <form>
             <div class="form-group">
                 <label for="name">Nombre</label>
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="name" id="name" class="form-control" [(ngModel)]="student.name">
+                <div class="alert alert-danger" *ngIf="errors?.name"> {{ errors.name }}</div>
             </div>
             <div class="form-group">
                 <label for="apellido">Apellidos</label>
-                <input type="text" name="apellido" class="form-control">
+                <input type="text" name="apellido" id="apellido" class="form-control" [(ngModel)]="student.lastName">
+                <div class="alert alert-danger" *ngIf="errors?.lastName">{{ errors.lastName }}</div>
             </div>
             <div class="form-group">
                 <label for="email">Correo electrónico</label>
-                <input type="text" name="email" class="form-control">
+                <input type="text" name="email" id="email" class="form-control" [(ngModel)]="student.email">
+                <div class="alert alert-danger" *ngIf="errors?.email"> {{ errors.email }}</div>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary">Guardar</button>
+                <button class="btn btn-primary" (click)="student.studentId ? edit() : save()">Guardar</button>
             </div>
         </form>
     </div>

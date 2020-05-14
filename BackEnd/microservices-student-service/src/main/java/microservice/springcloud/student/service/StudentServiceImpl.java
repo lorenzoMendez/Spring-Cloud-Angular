@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -104,4 +106,18 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 		super.deleteById( studentId );
 		this.deleteCourseByStudentId( studentId );
 	}
+
+	@Override
+	@Transactional( readOnly = true )
+	public Iterable<Student> findAll() {
+		
+		return this.repository.findAllByOrderByStudentIdAsc();
+	}
+
+	@Override
+	@Transactional( readOnly = true )
+	public Page<Student> findAll(Pageable pageable) {
+		
+		return this.repository.findAllByOrderByStudentIdAsc( pageable );
+	}	
 }

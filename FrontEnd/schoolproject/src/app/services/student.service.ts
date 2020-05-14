@@ -43,7 +43,7 @@ export class StudentService {
   }
   
   public deleteStudent( studentId: number ): Observable<void> {
-    return this.http.delete<void>( this.baseUrl + 'student/' + studentId );
+    return this.http.delete<void>( this.baseUrl + 'student/delete/' + studentId );
   }
 
 }
