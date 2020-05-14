@@ -1,5 +1,6 @@
 package springcloud.microservices.exam.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,5 +60,16 @@ public class ExamServiceImpl extends CommonServiceImpl<Exam, ExamRepository > im
 	public Iterable<Subject> findAllSubject() {
 		
 		return subjectRepository.findAll();
+	}
+
+	@Override
+	@Transactional( readOnly = true )
+	public Iterable<Long> findExamenAnsweredByQuestionId( List<Long> ids ) {
+		
+		if( ids != null && ids.size() > 0 ) {
+			return repository.findExamenAnsweredByQuestionId( ids );
+		}
+		
+		return new ArrayList<>();
 	}
 }

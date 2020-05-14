@@ -9,13 +9,12 @@ import { Student } from 'src/app/models/student';
 })
 export class StudentComponent implements OnInit {
 
-  tittle: string = "Listado de alumnos";
-  students: Student[] = [];
+  public tittle: string = "Listado de estudiantes";
+  
+  public students: Student[] = [];
 
   // Se puede inyectar dependencias de esta forma
-  constructor( private studentServie: StudentService ) {
-    this.tittle = studentServie.getEndPoint();
-  }
+  constructor( private studentServie: StudentService ) { }
 
   ngOnInit(): void {
     // Primero suscribirse al observable

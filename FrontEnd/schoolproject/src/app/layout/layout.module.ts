@@ -7,10 +7,10 @@ import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [NavbarComponent],
-  exports: [NavbarComponent],
+  exports: [NavbarComponent],       // Para poder exportar los componentes
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule                // Para que funcionen las rutas
   ]
 })
 export class LayoutModule { }

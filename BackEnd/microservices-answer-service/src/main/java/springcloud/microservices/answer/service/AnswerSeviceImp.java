@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+// import springcloud.microservices.answer.client.ExamFeignClient;
 import springcloud.microservices.answer.model.Answer;
 import springcloud.microservices.answer.repository.AnswerRepository;
 
@@ -16,31 +16,68 @@ public class AnswerSeviceImp implements AnswerService {
 	@Autowired
 	private AnswerRepository answerRepository;
 	
+	// @Autowired
+	// private ExamFeignClient examClient;
+	
 	@Override
-	@Transactional
 	public Iterable<Answer> saveAll(Iterable<Answer> answers) {
-		
 		answers = ( (List<Answer>) answers ).stream().map( a -> {
-			a.setAnsweId( a.getStudent().getStudentId() );
+			a.setStudentId( a.getStudent().getStudentId() );
+			a.setQuestionId( a.getQuestion().getQuestionId() );
 			return a;
 		} ).collect( Collectors.toList() );
 		
 		return answerRepository.saveAll( answers );
 	}
 
+	// Retorna Respuestas con estudiantes y el examen
 	@Override
-	@Transactional( readOnly = true )
-	public Iterable<Answer> findAnswerByStudentIdByExamId(Long studentId, Long examId) {
+	public Iterable<Answer> findAnswerByStudentIdAndExamId(Long studentId, Long examId) {
+		// Ahora se guardan las relaciones en mongo y podemos hace la consulta directamente
+		/*Exam exam = examClient.findByExamId( examId );
 		
-		return answerRepository.findAnswerByStudentIdByExamId( studentId, examId );
+		List<Question> questions = exam.getQuestions();
+		List<Long> questionsIds = questions.stream().map( q -> q.getQuestionId() ).collect( Collectors.toList() );
+		List<Answer> answers = (List<Answer>) this.answerRepository.findAnswerByStudentIdByQuestionId( studentId, questionsIds );
+		
+		answers = answers.stream().map( a -> {
+			questions.forEach( q -> { 
+				if( q.getQuestionId().compareTo( a.getQuestionId() ) == 0 ) {
+					a.setQuestion( q );
+				}
+			} );
+			return a;
+		} ).collect( Collectors.toList() ); */
+		
+		List<Answer> answers = (List<Answer>) answerRepository.findAnswerByStudentIdByExamId( studentId, examId );
+		
+		return answers;
 	}
 
 	// Examenes contestados
 	@Override
-	@Transactional( readOnly = true )
 	public Iterable<Long> findExamenAnsweredByStudentId(Long studentId) {
+		/* List<Answer> questions = (List<Answer>) answerRepository.findByStudentId( studentId );
+		List<Long> examIds = Collections.emptyList();
+		if( questions.size() > 0 ) {
+			List<Long> questionIds = questions.stream().map( q -> q.getQuestionId() ).collect( Collectors.toList() );
+			examIds = examClient.answered( questionIds );
+		} */
 		
-		return answerRepository.findExamenAnsweredByStudentId( studentId );
+		List<Answer> questions = (List<Answer>) 
+			answerRepository.findExamenAnsweredByStudentId( studentId );
+		
+		List<Long> examIds = questions
+			.stream().map( q -> q.getQuestion().getExam().getExamId() )
+			.distinct().collect( Collectors.toList() );
+		
+		return examIds;
+	}
+
+	@Override
+	public Iterable<Answer> findByStudentId(Long studentId) {
+		
+		return this.answerRepository.findByStudentId( studentId );
 	}
 
 }

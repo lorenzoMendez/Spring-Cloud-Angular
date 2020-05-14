@@ -18,6 +18,7 @@ public class AnswerController {
 	@Autowired
 	private AnswerService answerService;
 	
+	// Guardar las respuestaas de un examen
 	@PostMapping( "/save-answers" )
 	public ResponseEntity<?> saveAnswers( @RequestBody Iterable<Answer> answers ) {
 		try {
@@ -33,7 +34,7 @@ public class AnswerController {
 	public ResponseEntity<?> findAnswersByStudentExam( @PathVariable( "studentId" ) Long studentId, @PathVariable( "examId" ) Long examId ) {
 		try {
 			
-			return ResponseEntity.ok( answerService.findAnswerByStudentIdByExamId(studentId, examId) );
+			return ResponseEntity.ok( answerService.findAnswerByStudentIdAndExamId(studentId, examId) );
 			
 		} catch( Exception err ) {
 			return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( err.getMessage() );

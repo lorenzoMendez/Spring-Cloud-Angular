@@ -9,20 +9,16 @@ import { Student } from '../models/student';
 })
 export class StudentService {
   
-  private baseEndPoint: string;
+  private baseUrl: string;
 
   private headers: HttpHeaders = new HttpHeaders( { 'Content-Type': 'application/json' } );
 
   constructor( private http: HttpClient, private endPointService: EndpointService ) {
-    this.baseEndPoint = this.endPointService.getEndPoints()[ 'api_microservices' ];
-  }
-
-  public getEndPoint(){
-    return this.baseEndPoint;
+    this.baseUrl = this.endPointService.getEndPoint( 'api_microservices' );
   }
   
   public listingStudents() : Observable<Student[]> {
-    return this.http.get<Student[]>( this.baseEndPoint + 'student/retrieve' );
+    return this.http.get<Student[]>( this.baseUrl + 'student/retrieve' );
     // return this.http.get<Student[]>( this.baseEndPoint ).pipe( map( students => students as Student[] ) );
   }
 
@@ -31,23 +27,23 @@ export class StudentService {
           .set( 'page', page )
           .set( 'size', size );
 
-    return this.http.get<any>( this.baseEndPoint + 'student/pagination', { params: params } );
+    return this.http.get<any>( this.baseUrl + 'student/pagination', { params: params } );
   }
 
   public getStudent( studentId: number ) : Observable<Student> {
-    return this.http.get<Student>( this.baseEndPoint + 'student/retrieve/' + studentId );
+    return this.http.get<Student>( this.baseUrl + 'student/retrieve/' + studentId );
   }
 
   public saveStudent( student: Student ) : Observable<Student> {
-    return this.http.post<Student>( this.baseEndPoint + 'student/save', student, { headers: this.headers } );
+    return this.http.post<Student>( this.baseUrl + 'student/save', student, { headers: this.headers } );
   }
 
   public updateStudent( student: Student ) : Observable<Student> {
-    return this.http.put<Student>( this.baseEndPoint + 'student/update', student, { headers: this.headers } );
+    return this.http.put<Student>( this.baseUrl + 'student/update', student, { headers: this.headers } );
   }
   
   public deleteStudent( studentId: number ): Observable<void> {
-    return this.http.delete<void>( this.baseEndPoint + 'student/' + studentId );
+    return this.http.delete<void>( this.baseUrl + 'student/' + studentId );
   }
 
 }

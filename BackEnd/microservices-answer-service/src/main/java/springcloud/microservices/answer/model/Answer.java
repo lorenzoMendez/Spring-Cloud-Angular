@@ -1,50 +1,34 @@
 package springcloud.microservices.answer.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import org.springframework.data.annotation.Id;
+// import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import springcloud.microservices.exam.common.model.Question;
 import springcloud.microservices.student.common.model.Student;
 
-@Entity
-@Table( name = "answer" )
+@Document( collection = "answer" )
 public class Answer implements Serializable {
 
 	private static final long serialVersionUID = 2554150930139543720L;
 	
 	@Id
-	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	@Column( name = "answer_id" )
-	private Long answeId;
+	private String answeId;
 
-	// Muchas respuestas a un estudiante
-	// @ManyToOne( fetch = FetchType.LAZY )
-	@Transient
+	// @Transient
 	private Student student;
 	
-	@Column( name = "student_id" )
 	private Long studentId;
 	
-	// Una respuesta a una pregunta
-	@OneToOne( fetch = FetchType.LAZY )
+	// Especifica que es parte de la clase pero no del mapeo
+	// @Transient
 	private Question question;
 	
-	@Column( name = "response" )
 	private String response;
 	
-	@Column( name = "create_date" )
-	private Date createDate;
+	private Long questionId;
 	
 	public Long getStudentId() {
 		return studentId;
@@ -54,11 +38,11 @@ public class Answer implements Serializable {
 		this.studentId = studentId;
 	}
 	
-	public Long getAnsweId() {
+	public String getAnsweId() {
 		return answeId;
 	}
 
-	public void setAnsweId(Long answeId) {
+	public void setAnsweId( String answeId ) {
 		this.answeId = answeId;
 	}
 
@@ -68,19 +52,6 @@ public class Answer implements Serializable {
 
 	public void setResponse(String response) {
 		this.response = response;
-	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	@PrePersist
-	public void createDate() {
-		this.createDate = new Date();
 	}
 
 	public Question getQuestion() {
@@ -97,5 +68,13 @@ public class Answer implements Serializable {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+
+	public Long getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Long questionId) {
+		this.questionId = questionId;
 	}
 }

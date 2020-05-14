@@ -16,7 +16,11 @@ export class EndpointService {
 
   constructor() { }
   
-  getEndPoints() {    
+  public getEndPoints() {    
     return this.points;
+  }
+
+  public getEndPoint( key: string ) {
+    return this.points[ key ];
   }
 }

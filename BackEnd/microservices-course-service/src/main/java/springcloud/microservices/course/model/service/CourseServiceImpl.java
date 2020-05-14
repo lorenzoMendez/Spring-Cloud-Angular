@@ -134,14 +134,16 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 		
 		List<Long> examsId = (List<Long>) findExamAnswered( studentId );
 		
-		List<Exam> exams = course.getExams().stream().map( exam -> { 
-			if( examsId.contains( exam.getExamId() ) ) {
-				exam.setAnswerStatus( true );
-			}
-			return exam;
-		} ).collect( Collectors.toList() );
-		
-		course.setExams( exams );
+		if( examsId != null && examsId.size() > 0 ) {
+			List<Exam> exams = course.getExams().stream().map( exam -> { 
+				if( examsId.contains( exam.getExamId() ) ) {
+					exam.setAnswerStatus( true );
+				}
+				return exam;
+			} ).collect( Collectors.toList() );
+			
+			course.setExams( exams );
+		}
 		
 		return course;
 	}
