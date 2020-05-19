@@ -12,9 +12,10 @@ import springcloud.microservices.exam.common.model.Exam;
 @FeignClient( name = "microservice-exam-service" )
 public interface ExamFeignClient {
 	
-	@GetMapping( "/retrieve/{id}" )
+	@GetMapping( "/{id}" )
 	public Exam findByExamId( @PathVariable( "id" ) Long examId );
 	
+	// Examenes contestados
 	@GetMapping( "/answered" )
 	public List<Long> answered( @RequestParam List<Long> questionIds );
 

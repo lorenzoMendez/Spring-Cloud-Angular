@@ -6,7 +6,7 @@ import { CourseComponent } from './components/course/course.component';
 import { StudentFormComponent } from './components/student/student-form.component';
 
 
-const routes: Routes = [
+const ROUTES: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'alumnos' },
   { path: 'alumnos', component: StudentComponent },
   { path: 'alumnos/form', component: StudentFormComponent },
@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot( ROUTES ) ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

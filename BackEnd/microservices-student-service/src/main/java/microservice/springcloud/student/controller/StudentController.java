@@ -24,7 +24,7 @@ import springcloud.microservices.commons.controller.CommonController;
 @RestController
 public class StudentController extends CommonController<Student, StudentServiceImpl> {
 	
-	@PutMapping( "/update" )
+	@PutMapping( "" )
 	public ResponseEntity<?> updateStudent( @Valid @RequestBody Student student, BindingResult result ) {
 		
 		if( result.hasErrors() ) {

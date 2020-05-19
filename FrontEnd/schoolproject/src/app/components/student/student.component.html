@@ -4,8 +4,12 @@
     <div class="card-body">
         
         <button class="btn btn-primary my-2" routerLink = "/alumnos/form">Crear</button>
+        
+        <div class="alert alert-info" *ngIf="list.length == 0">
+            No hay alumnos disponibles en el sistema en este momento. Espere a que el sistema responda.
+        </div>
 
-        <table class="table table-hover table-striped">
+        <table class="table table-hover table-striped" *ngIf="list.length > 0">
             <thead>
                 <tr></tr>
                 <th>Id</th>
@@ -17,19 +21,29 @@
                 <th>Eliminar</th>
             </thead>
             <tbody>
-                <tr *ngFor="let student of students">
-                    <td>{{ student.studentId }}</td>
+                <tr *ngFor="let student of list">
+                    <td>{{ student.id }}</td>
                     <td>{{ student.name }}</td>
                     <td>{{ student.lastName }}</td>
                     <td>{{ student.email }}</td>
                     <td>{{ student.createDate | date : 'dd-MM-yyyy' }}</td>
                     <td> <button class="btn btn-secondary btn-sm" [routerLink] = "['/alumnos/editar']" 
-                        [queryParams]="{ studentId: student.studentId }">Crear</button> </td>
+                        [queryParams]="{ studentId: student.id }">Editar</button> </td>
                     <td>
                         <button class="btn btn-danger btn-sm" (click)="delete( student )">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <mat-paginator [length]="totalRows"
+            [pageSize]="pageSize"
+            [pageIndex]="pageIndex"
+            [pageSizeOptions]="pageSizeOptions"
+            (page) = "pagination( $event )"
+            showFirstLastButtons 
+            class="float-left mx-2">
+        </mat-paginator>
+
+
     </div>
 </div>

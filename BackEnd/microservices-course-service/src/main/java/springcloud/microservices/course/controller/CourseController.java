@@ -25,7 +25,7 @@ import springcloud.microservices.student.common.model.Student;
 public class CourseController extends CommonController<Course, CourseServiceImpl> {
 	
 	@Override
-	@GetMapping( "/retrieve/{id}" )
+	@GetMapping( "/{id}" )
 	public ResponseEntity<?> findById( @PathVariable( "id" ) Long id ) {
 		try {
 			
@@ -37,7 +37,7 @@ public class CourseController extends CommonController<Course, CourseServiceImpl
 	}
 	
 	@Override
-	@GetMapping( "/retrieve" )
+	@GetMapping( "" )
 	public ResponseEntity<?> findAll() {
 		try {
 			
@@ -60,7 +60,7 @@ public class CourseController extends CommonController<Course, CourseServiceImpl
 		}
 	}
 	
-	@PutMapping( "/update" )
+	@PutMapping( "" )
 	public ResponseEntity<?> updateCourse( @Valid @RequestBody Course course, BindingResult result ) {
 		
 		if( result.hasErrors() ) {

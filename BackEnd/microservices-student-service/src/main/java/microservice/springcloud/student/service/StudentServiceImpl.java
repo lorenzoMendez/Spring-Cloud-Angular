@@ -26,11 +26,11 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 	
 	public Student update( Student student ) throws Exception {
 		
-		if( student.getStudentId() == null ) {
+		if( student.getId() == null ) {
 			throw new Exception( "El id del alumno es obligatorio." );
 		}
 		
-		Optional<Student> oldStudent = this.findById( student.getStudentId() );
+		Optional<Student> oldStudent = this.findById( student.getId() );
 		
 		oldStudent.get().setEmail( student.getEmail() );
 		oldStudent.get().setName( student.getName() );
@@ -56,11 +56,11 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 	
 	public Student updateWithPhoto( Student student, MultipartFile file ) throws Exception {
 		
-		if( student.getStudentId() == null ) {
+		if( student.getId() == null ) {
 			throw new Exception( "El id del alumno es obligatorio." );
 		}
 		
-		Optional<Student> oldStudent = this.findById( student.getStudentId() );
+		Optional<Student> oldStudent = this.findById( student.getId() );
 		
 		oldStudent.get().setEmail( student.getEmail() );
 		oldStudent.get().setName( student.getName() );
@@ -111,13 +111,13 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 	@Transactional( readOnly = true )
 	public Iterable<Student> findAll() {
 		
-		return this.repository.findAllByOrderByStudentIdAsc();
+		return this.repository.findAllByOrderByIdAsc();
 	}
 
 	@Override
 	@Transactional( readOnly = true )
 	public Page<Student> findAll(Pageable pageable) {
 		
-		return this.repository.findAllByOrderByStudentIdAsc( pageable );
+		return this.repository.findAllByOrderByIdAsc( pageable );
 	}	
 }

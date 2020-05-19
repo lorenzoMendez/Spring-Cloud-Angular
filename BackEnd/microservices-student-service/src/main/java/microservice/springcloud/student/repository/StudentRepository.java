@@ -14,7 +14,7 @@ public interface StudentRepository extends PagingAndSortingRepository<Student, L
 	@Query( "SELECT u FROM Student u WHERE UPPER( u.name ) LIKE UPPER( CONCAT( '%', ?1, '%' ) ) OR UPPER( u.lastName ) LIKE UPPER( CONCAT( '%', ?1, '%' ) )" )
 	public List<Student> findByNameOrLastName( String search );
 	
-	public List<Student> findAllByOrderByStudentIdAsc();
+	public List<Student> findAllByOrderByIdAsc();
 	
-	public Page<Student> findAllByOrderByStudentIdAsc( Pageable pageable );
+	public Page<Student> findAllByOrderByIdAsc( Pageable pageable );
 }

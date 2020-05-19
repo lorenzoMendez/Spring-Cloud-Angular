@@ -29,20 +29,20 @@ public class Student implements Serializable {
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column( name = "student_id" )
-	private Long studentId;
-	
-	@NotEmpty
-	@Size( min = 3, max = 25 )
+	private Long id;
+
+	@NotEmpty( message = "El nombre es obligatorio")
+	@Size( min = 3, max = 25, message = "Tamaño entre 3 y 25 caracteres" )
 	@Column( name = "name", length = 25 )
 	private String name;
 	
-	@NotEmpty
-	@Size( min = 3, max = 50 )
+	@NotEmpty( message = "El apellido es obligatorio" )
+	@Size( min = 3, max = 50, message = "Tamaño entre 3 y 50 caracteres" )
 	@Column( name = "last_name", length = 50 )
 	private String lastName;
 	
-	@NotEmpty
-	@Email//(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" )
+	@NotEmpty( message = "El correo es obligatorio" )
+	@Email( message = "El correo no tiene el formato adecuado" )//(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$" )
 	@Column( name = "email", length = 35 )
 	private String email;
 	
@@ -84,7 +84,7 @@ public class Student implements Serializable {
 		
 		Student student = ( Student )obj;
 		
-		return this.studentId != null && this.studentId.equals( student.getStudentId() );
+		return this.id != null && this.id.equals( student.getId() );
 	}
 	
 	public Integer getStatusId() {
@@ -95,12 +95,12 @@ public class Student implements Serializable {
 		this.statusId = statusId;
 	}
 	
-	public Long getStudentId() {
-		return studentId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setStudentId(Long studentId) {
-		this.studentId = studentId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

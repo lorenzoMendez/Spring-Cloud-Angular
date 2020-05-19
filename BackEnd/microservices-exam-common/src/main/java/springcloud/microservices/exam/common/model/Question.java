@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -28,6 +29,7 @@ public class Question implements Serializable {
 	@Column( name = "question_id" )
 	private Long questionId;
 	
+	@NotNull( message = "La pregunta es obligatoria" )
 	@Column( name = "description" )
 	private String description;
 	

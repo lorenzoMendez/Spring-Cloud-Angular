@@ -24,18 +24,18 @@ public class ExamServiceImpl extends CommonServiceImpl<Exam, ExamRepository > im
 	
 	public Exam update( Exam exam ) throws Exception {
 		
-		if( exam.getExamId() == null ) {
+		if( exam.getId() == null ) {
 			throw new Exception( "Error! El identificador del registro es nulo." );
 		}
 		
-		Optional<Exam> dbTest = this.repository.findById( exam.getExamId() );
+		Optional<Exam> dbTest = this.repository.findById( exam.getId() );
 		
 		if( !dbTest.isPresent() ) {
-			throw new Exception( "Error! No existe el examen con id " + exam.getExamId() );
+			throw new Exception( "Error! No existe el examen con id " + exam.getId() );
 		}
 		
 		Exam update = dbTest.get();
-		update.setDescription( exam.getDescription() );
+		update.setName( exam.getName() );
 		
 		List<Question> deleteList =  update.getQuestions().stream()
 		.filter( q -> !exam.getQuestions().contains( q ) )

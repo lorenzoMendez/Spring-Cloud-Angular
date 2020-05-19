@@ -34,12 +34,12 @@ public class Exam implements Serializable {
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column( name = "exam_id" )
-	private Long examId;
-	
-	@NotEmpty
+	private Long id;
+
+	@NotEmpty( message = "El nombre del examen es obligatorio" )
 	@Column( name = "description" )
-	private String description;
-	
+	private String name;
+
 	@Column( name = "active_id" )
 	private Integer activeId;
 	
@@ -55,7 +55,7 @@ public class Exam implements Serializable {
 	@OneToMany( mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true )
 	List<Question> questions = new ArrayList<Question>();
 	
-	@NotNull
+	@NotNull( message = "La materia es obligatoria" )
 	@ManyToOne( fetch = FetchType.LAZY )
 	private Subject subject;
 	
@@ -82,20 +82,20 @@ public class Exam implements Serializable {
 		question.setExam( null );
 	}
 
-	public Long getExamId() {
-		return examId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setExamId(Long examId) {
-		this.examId = examId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getActiveId() {
@@ -151,7 +151,7 @@ public class Exam implements Serializable {
 		
 		Exam exam = ( Exam ) obj;
 		
-		return this.examId != null && exam.getExamId() != null && this.examId.equals( exam.getExamId() );
+		return this.id != null && exam.getId() != null && this.id.equals( exam.getId() );
 	}
 	
 	@PrePersist

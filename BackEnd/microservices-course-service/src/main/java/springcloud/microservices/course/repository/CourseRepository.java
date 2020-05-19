@@ -8,7 +8,7 @@ import springcloud.microservices.course.model.Course;
 
 public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
 	
-	@Query( "SELECT c FROM Course c JOIN FETCH c.courseStudents s WHERE s.studentId = ?1" )
+	@Query( "SELECT c FROM Course c JOIN FETCH c.courseStudents s WHERE s.id = ?1" )
 	public Course findCourseByStudentId( Long studentId );
 	
 	@Modifying

@@ -35,7 +35,7 @@ public class CommonController<E, S extends CommonService<E>> {
 		}
 	}
 	
-	@GetMapping( "/retrieve" )
+	@GetMapping( "" )
 	public ResponseEntity<?> findAll() {
 		try {
 			
@@ -46,7 +46,7 @@ public class CommonController<E, S extends CommonService<E>> {
 		}
 	}
 	
-	@GetMapping( "/retrieve/{id}" )
+	@GetMapping( "/{id}" )
 	public ResponseEntity<?> findById( @PathVariable( "id" ) Long id ) {
 		try {
 			
@@ -57,7 +57,7 @@ public class CommonController<E, S extends CommonService<E>> {
 		}
 	}
 	
-	@PostMapping( "/save" )
+	@PostMapping( "" )
 	public ResponseEntity<?> save( @Valid @RequestBody E entity, BindingResult result ) {
 		
 		if( result.hasErrors() ) {
@@ -67,7 +67,7 @@ public class CommonController<E, S extends CommonService<E>> {
 		return ResponseEntity.status( HttpStatus.CREATED ).body( service.save( entity ) );
 	}
 	
-	@DeleteMapping( "/delete/{id}" )
+	@DeleteMapping( "/{id}" )
 	public ResponseEntity<?> delete( @PathVariable( "id" ) Long id ) {
 		try {
 			
@@ -84,7 +84,7 @@ public class CommonController<E, S extends CommonService<E>> {
 		
 		Map<String, Object> errors = new HashMap<String, Object>();
 		result.getFieldErrors().forEach( err -> {
-			errors.put( err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage() );
+			errors.put( err.getField(), err.getDefaultMessage() );
 		} );
 		
 		return ResponseEntity.badRequest().body( errors );

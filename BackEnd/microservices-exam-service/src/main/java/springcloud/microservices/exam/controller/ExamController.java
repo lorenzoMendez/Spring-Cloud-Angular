@@ -32,7 +32,7 @@ public class ExamController extends CommonController<Exam, ExamServiceImpl> {
 		}
 	}
 	
-	@PutMapping( "/update" )
+	@PutMapping( "/" )
 	public ResponseEntity<?> update( @Valid @RequestBody Exam exam, BindingResult result ) {
 		
 		if( result.hasErrors() ) {

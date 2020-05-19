@@ -33,7 +33,7 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 		Page<Course> pagination = this.repository.findAll( pageable ).map( course -> {
 			course.getCourseStudents().forEach( cs -> {
 				Student student = new Student();
-				student.setStudentId( cs.getStudentId() );
+				student.setId( cs.getStudentId() );
 				course.addStudent( student );
 			} );
 			return course;
@@ -64,7 +64,7 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 			.stream().map( c -> {
 				c.getCourseStudents().forEach( cs -> {
 					Student student = new Student();
-					student.setStudentId( cs.getStudentId() );
+					student.setId( cs.getStudentId() );
 					c.addStudent( student );
 				} );
 				return c;
@@ -75,13 +75,13 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 	
 	public Course update( Course course ) throws Exception {
 		
-		if( course.getCourseId() == null ) {
+		if( course.getId() == null ) {
 			throw new Exception( "El id del alumno es obligatorio." );
 		}
 		
-		Optional<Course> oldCourse = this.repository.findById( course.getCourseId() );
+		Optional<Course> oldCourse = this.repository.findById( course.getId() );
 		
-		oldCourse.get().setDescription( course.getDescription() );
+		oldCourse.get().setName( course.getName() );
 		oldCourse.get().setActiveId( course.getActiveId() );
 		
 		return this.save( oldCourse.get() );
@@ -98,7 +98,7 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 		
 		listStudent.forEach( student -> {
 			CourseStudent courseStudent = new CourseStudent();
-			courseStudent.setStudentId( student.getStudentId() );
+			courseStudent.setStudentId( student.getId() );
 			courseStudent.setCourse( dbCourse );
 			dbCourse.addCourseStudent( courseStudent );
 		} );
@@ -115,7 +115,7 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 		}
 		Course dbCourse = course.get();
 		CourseStudent courseStudent = new CourseStudent();
-		courseStudent.setStudentId( student.getStudentId() );
+		courseStudent.setStudentId( student.getId() );
 		dbCourse.removeCourseStudent( courseStudent );
 		
 		return this.save( dbCourse );
@@ -136,7 +136,7 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 		
 		if( examsId != null && examsId.size() > 0 ) {
 			List<Exam> exams = course.getExams().stream().map( exam -> { 
-				if( examsId.contains( exam.getExamId() ) ) {
+				if( examsId.contains( exam.getId() ) ) {
 					exam.setAnswerStatus( true );
 				}
 				return exam;

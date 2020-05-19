@@ -22,7 +22,7 @@ public class AnswerSeviceImp implements AnswerService {
 	@Override
 	public Iterable<Answer> saveAll(Iterable<Answer> answers) {
 		answers = ( (List<Answer>) answers ).stream().map( a -> {
-			a.setStudentId( a.getStudent().getStudentId() );
+			a.setStudentId( a.getStudent().getId() );
 			a.setQuestionId( a.getQuestion().getQuestionId() );
 			return a;
 		} ).collect( Collectors.toList() );
@@ -68,7 +68,7 @@ public class AnswerSeviceImp implements AnswerService {
 			answerRepository.findExamenAnsweredByStudentId( studentId );
 		
 		List<Long> examIds = questions
-			.stream().map( q -> q.getQuestion().getExam().getExamId() )
+			.stream().map( q -> q.getQuestion().getExam().getId() )
 			.distinct().collect( Collectors.toList() );
 		
 		return examIds;

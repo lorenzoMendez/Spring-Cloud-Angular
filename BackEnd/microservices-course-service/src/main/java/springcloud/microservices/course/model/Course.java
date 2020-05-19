@@ -34,12 +34,12 @@ public class Course implements Serializable {
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	@Column( name = "course_id" )
-	private Long courseId;
-	
-	@NotNull
+	private Long id;
+
+	@NotNull( message = "El nombre del curso es obligatorio" )
 	@Column( name = "description", nullable = false )
-	private String description;
-	
+	private String name;
+
 	@Column( name = "create_date", nullable = false )
 	private Date createDate;
 	
@@ -88,22 +88,22 @@ public class Course implements Serializable {
 		this.exams.remove( exam );
 	}
 
-	public Long getCourseId() {
-		return courseId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCourseId(Long courseId) {
-		this.courseId = courseId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setName(String name) {
+		this.name = name;
 	}
-
+	
 	public Date getCreateDate() {
 		return createDate;
 	}

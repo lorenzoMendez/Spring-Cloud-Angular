@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -31,6 +32,7 @@ public class Subject implements Serializable {
 	@Column( name = "subject_id" )
 	private Long subjectId;
 	
+	@NotNull( message = "El nombre de la materia es obligatoria" )
 	@Column( name = "description" )
 	private String description;
 	
