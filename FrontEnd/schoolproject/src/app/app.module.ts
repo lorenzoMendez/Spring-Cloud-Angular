@@ -12,6 +12,7 @@ import { LayoutModule } from './layout/layout.module';
 import { StudentFormComponent } from './components/student/student-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CourseFormComponent } from './components/course/course-form.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     StudentComponent,
     CourseComponent,
     ExamComponent,
-    StudentFormComponent
+    StudentFormComponent,
+    CourseFormComponent
   ],
   imports: [
     BrowserModule,

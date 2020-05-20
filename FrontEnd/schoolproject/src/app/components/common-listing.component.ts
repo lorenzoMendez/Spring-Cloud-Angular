@@ -8,8 +8,8 @@ import { Generic } from '../models/generic';
 export abstract class CommonListingComponent<E extends Generic, S extends CommonService<E>> implements OnInit {
 
   public tittle: string;
-  public list: E[] = [];
   protected modelName: string;
+  public list: E[] = [];
   
   // Table pagination config
   public totalRows: number = 0;

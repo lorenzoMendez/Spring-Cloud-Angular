@@ -13,6 +13,7 @@
             <thead>
                 <tr></tr>
                 <th>Id</th>
+                <th>foto</th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
                 <th>Correo</th>
@@ -23,12 +24,27 @@
             <tbody>
                 <tr *ngFor="let student of list">
                     <td>{{ student.id }}</td>
+                    <td>
+                        
+                        <img *ngIf="student.photoHashCode" 
+                        [src]="baseUrl + '/upload-photo/' + student.id + '?photoHashCode=' + student.photoHashCode"
+                        class="img-thumbnail rounded" style="width: 50px; cursor:pointer">
+
+                        <img *ngIf="!student.photoHashCode" 
+                        [src]="'/assets/images/not-user.png'"
+                        class="img-thumbnail rounded" style="width: 50px; cursor:pointer">
+                        
+                    </td>
                     <td>{{ student.name }}</td>
                     <td>{{ student.lastName }}</td>
                     <td>{{ student.email }}</td>
                     <td>{{ student.createDate | date : 'dd-MM-yyyy' }}</td>
-                    <td> <button class="btn btn-secondary btn-sm" [routerLink] = "['/alumnos/editar']" 
-                        [queryParams]="{ studentId: student.id }">Editar</button> </td>
+                    <td> 
+                        <button class="btn btn-secondary btn-sm" 
+                            [routerLink] = "['/alumnos/editar']" 
+                            [queryParams]="{ id: student.id }">Editar
+                        </button>
+                    </td>
                     <td>
                         <button class="btn btn-danger btn-sm" (click)="delete( student )">Eliminar</button>
                     </td>

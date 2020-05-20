@@ -45,18 +45,17 @@ public class CourseServiceImpl extends CommonServiceImpl<Course, CourseRepositor
 	public Course findDetailCourseById( Long courseId ) throws Exception {
 		
 		Optional<Course> optionaCourse = this.repository.findById( courseId );
-		
 		Course course = optionaCourse.get();
 		
-		List<Long> ids = course.getCourseStudents().parallelStream().map(
-				cs -> cs.getStudentId() ).collect( Collectors.toList() );
+		List<Long> ids = course.getCourseStudents()
+				.stream().map( cs -> cs.getStudentId() )
+				.collect( Collectors.toList() );
 		
-		List<Student> students = this.retrieveStudentsByIds( ids );
-		
-		course.setStudents( students );
-		
+		if( ids.size() > 0 ) {
+			List<Student> students = this.retrieveStudentsByIds( ids );
+			course.setStudents( students );
+		}
 		return course;
-		
 	}
 
 	public List<Course> retrieveAll() {

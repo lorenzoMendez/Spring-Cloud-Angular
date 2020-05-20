@@ -1,0 +1,23 @@
+
+
+<div class="card bg-light mb-3">
+    <div class="card-header"> <h5> {{ tittle }} </h5></div>
+    <div class="card-body">
+        <button class="btn btn-secondary my-2" routerLink = "/cursos">Volver</button>
+
+        <form>
+            
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" name="name" id="name" class="form-control" [(ngModel)]="model.name">
+                <div class="alert alert-danger" *ngIf="errors?.name"> {{ errors.name }}</div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" (click)="model.id ? edit() : save()">
+                    {{ model.id ? 'Editar' : 'Crear' }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

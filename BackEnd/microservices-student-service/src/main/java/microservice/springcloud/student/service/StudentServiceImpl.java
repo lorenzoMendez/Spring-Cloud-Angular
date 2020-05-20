@@ -1,6 +1,5 @@
 package microservice.springcloud.student.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,10 +88,9 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 	@Override
 	@Transactional( readOnly = true )
 	public List<Student> findAllByIds( List<Long> list) {
-		if( list.size() > 0 ) {
-			return (List<Student>) this.repository.findAllById( list );
-		}
-		return new ArrayList<>();
+		
+		return (List<Student>) this.repository.findAllById( list );
+		
 	}
 
 	@Override

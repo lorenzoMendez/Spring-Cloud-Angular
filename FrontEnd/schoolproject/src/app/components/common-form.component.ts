@@ -23,18 +23,17 @@ export abstract class CommonFormComponent<E extends Generic, S extends CommonSer
 
     this.route.queryParams.subscribe( params => {
       // El signo + castea el string a un number
-      const id: number = +params[ "studentId" ];
+      const id: number = +params[ "id" ];
       if( id ) {
         this.service.get( id ).subscribe( model => this.model = model );
       }
     } );
-  
   }
 
   public save(): void {
-    this.service.save( this.model ).subscribe( student => {
-      console.log( student );
-      Swal.fire( 'Nuevo:', `${this.modelName} ${ student.name } creado con éxito`, "success" );
+    this.service.save( this.model ).subscribe( model => {
+      console.log( model );
+      Swal.fire( 'Nuevo:', `${this.modelName} ${ model.name } creado con éxito`, "success" );
       this.router.navigate( [ this.redirect ] );
     }, err => {
       if( err.status === 400 ) {
